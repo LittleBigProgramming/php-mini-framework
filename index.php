@@ -24,12 +24,12 @@ $container['db'] = function () {
     );
 };
 
-$app->get('', function () {
+$app->get('/', function () {
     echo "Home";
 });
 
 $app->get('/users', function () {
-    echo "Home";
+    echo "users";
 });
 
 $app->run();

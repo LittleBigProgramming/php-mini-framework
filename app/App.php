@@ -31,7 +31,7 @@ class App
         $router = $this->container->router;
         $router->setPath($_SERVER['PATH_INFO'] ?? '/');
 
-        var_dump($response = $router->getResponse());
+        $response = $router->getResponse();
 
         return $this->process($response);
     }
