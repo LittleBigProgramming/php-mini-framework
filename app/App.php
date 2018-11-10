@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exceptions\NoRouteFoundException;
+use phpDocumentor\Reflection\Types\Callable_;
 
 class App
 {
@@ -84,6 +85,12 @@ class App
      */
     protected function process($callable)
     {
+        if (is_array($callable)) {
+            $callable[0] = (!is_object($callable[0])) ? new $callable[0] : $callable[0] = new $callable[0];
+
+            return call_user_func($callable);
+        }
+
         return $callable();
     }
 }

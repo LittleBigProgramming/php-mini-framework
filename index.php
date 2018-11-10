@@ -28,9 +28,9 @@ $container['db'] = function () {
     );
 };
 
-$app->get('/', function () {
-    echo "home";
-});
+$app->get('/', ['App\Controllers\HomeController', 'index']);
+
+$app->get('/', [new App\Controllers\HomeController($container->db), 'indexWithDependency']);
 
 $app->post('/signup', function () {
     echo "sign up";

@@ -32,6 +32,7 @@ class Router
     /**
      * @return mixed
      * @throws MethodNotAllowedException
+     * @throws NoRouteFoundException
      */
     public function getResponse()
     {
