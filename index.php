@@ -6,6 +6,10 @@ $app = new App\App();
 
 $container = $app->getContainer();
 
+$container['errorHandler'] = function () {
+    die('404, not found');
+};
+
 $container['config'] = function () {
     return [
         'db_driver' => 'mysql',

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Exceptions\NoRouteFoundException;
+
 class App
 {
 
@@ -62,7 +64,16 @@ class App
     {
         $router = $this->container->router;
         $router->setPath($_SERVER['REQUEST_URI'] ?? '/');
-        $response = $router->getResponse();
+
+        try {
+            $response = $router->getResponse();
+        } catch (NoRouteFoundException $e) {
+            if ($this->container->has('errorHandler')) {
+                $response = $this->container->errorHandler;
+            } else {
+                return;
+            }
+        }
 
         return $this->process($response);
     }
