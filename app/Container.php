@@ -10,6 +10,10 @@ class Container implements ArrayAccess
     protected $items = [];
     protected $cache = [];
 
+    /**
+     * Container constructor.
+     * @param array $items
+     */
     public function __construct(array $items = [])
     {
         foreach ($items as $key => $item) {

@@ -25,11 +25,15 @@ $container['db'] = function () {
 };
 
 $app->get('/', function () {
-    echo "Home";
+    echo "home";
 });
 
-$app->get('/users', function () {
-    echo "users";
+$app->post('/signup', function () {
+    echo "sign up";
 });
+
+$app->map('/users', function () {
+    echo 'Users';
+}, ['GET', 'POST']);
 
 $app->run();
