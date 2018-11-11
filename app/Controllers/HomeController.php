@@ -6,19 +6,21 @@ use PDO;
 
 class HomeController
 {
-    public function __construct(PDO $db)
-    {
-        var_dump($db);
-        die;
-    }
 
-    public function index()
+    /**
+     * @param $response
+     */
+    public function index($response)
     {
         echo 'Home';
     }
 
-    public function indexWithDependency()
+    /**
+     * @param $response
+     * @return mixed
+     */
+    public function indexWithDependency($response)
     {
-        echo 'Home';
+        return $response->setBody('Home');
     }
 }

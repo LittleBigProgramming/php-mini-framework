@@ -7,7 +7,9 @@ $app = new App\App();
 $container = $app->getContainer();
 
 $container['errorHandler'] = function () {
-    die('404, not found');
+    return function ($response) {
+        return $response->setBody('Page not found')->withStatus(404);
+    };
 };
 
 $container['config'] = function () {
@@ -32,12 +34,6 @@ $app->get('/', ['App\Controllers\HomeController', 'index']);
 
 $app->get('/', [new App\Controllers\HomeController($container->db), 'indexWithDependency']);
 
-$app->post('/signup', function () {
-    echo "sign up";
-});
-
-$app->map('/users', function () {
-    echo 'Users';
-}, ['GET', 'POST']);
+$app->get('/users', [new App\Controllers\UserController($container->db), 'index']);
 
 $app->run();

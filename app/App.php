@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Exceptions\NoRouteFoundException;
-use phpDocumentor\Reflection\Types\Callable_;
 
 class App
 {
@@ -18,6 +17,9 @@ class App
         $this->container = new Container([
             'router' => function () {
                 return new Router;
+            },
+            'response' => function () {
+                return new Response;
             }
         ]);
     }
@@ -76,7 +78,7 @@ class App
             }
         }
 
-        return $this->process($response);
+        return $this->respond($this->process($response));
     }
 
     /**
@@ -85,12 +87,40 @@ class App
      */
     protected function process($callable)
     {
+        $response = $this->container->response;
+
+
         if (is_array($callable)) {
             $callable[0] = (!is_object($callable[0])) ? new $callable[0] : $callable[0] = new $callable[0];
 
-            return call_user_func($callable);
+            return call_user_func($callable, $response);
         }
 
-        return $callable();
+        return $callable($response);
     }
+
+    /**
+     * @param $response
+     */
+    protected function respond($response)
+    {
+        if (!$response instanceof Response) {
+            echo $response;
+            return;
+        }
+
+        header(sprintf(
+            'HTTP/%s %s %s',
+            '1.1',
+            $response->getStatusCode(),
+            ''
+        ));
+
+        foreach ($response->getHeaders() as $header) {
+            header($header[0] . ': ' . $header[1]);
+        }
+
+        echo $response->getBody();
+    }
+
 }
