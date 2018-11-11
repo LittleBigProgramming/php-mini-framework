@@ -16,9 +16,9 @@ $container['config'] = function () {
     return [
         'db_driver' => 'mysql',
         'db_host' => 'localhost',
-        'db_name' => 'project',
+        'db_name' => 'miniframework',
         'db_user' => 'root',
-        'db_password' => 'root',
+        'db_password' => '',
     ];
 };
 
