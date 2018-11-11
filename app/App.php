@@ -122,5 +122,4 @@ class App
 
         echo $response->getBody();
     }
-
 }
